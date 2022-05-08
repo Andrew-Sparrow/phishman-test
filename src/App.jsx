@@ -54,7 +54,7 @@ const data = {
     },
     {
       "key": 9,
-      "ts": new Date("2000-09-15T07:47:01.121Z"),
+      "ts": new Date("2018-10-15T07:47:01.121Z"),
       "level": 1,
       "message": "message_9"
     },
@@ -63,6 +63,12 @@ const data = {
       "ts": new Date("2022-09-15T07:47:01.121Z"),
       "level": 2,
       "message": "message_10"
+    },
+    {
+      "key": 11,
+      "ts": new Date("2019-09-15T07:47:01.121Z"),
+      "level": 2,
+      "message": "message_11"
     }
   ]
 };
@@ -80,17 +86,17 @@ const columns = [
   {
     title: 'TS',
     dataIndex: 'ts',
-    key: 'key',
+    key: 'ts',
     render: (ts) => <span> {ts.toLocaleString()} </span>,
     sorter: {
-      compare: (a, b) => a.ts - b.ts,
+      compare: (a, b) => b.ts - a.ts,
       multiple: 2
     }
   },
   {
     title: 'Level',
     dataIndex: 'level',
-    key: 'key',
+    key: 'level',
     sorter: {
       compare: (a, b) => a.level - b.level,
       multiple: 3
@@ -99,7 +105,7 @@ const columns = [
   {
     title: 'Message',
     dataIndex: 'message',
-    key: 'key',
+    key: 'message',
   },
 ];
 
@@ -109,6 +115,9 @@ function App() {
       <Table
         dataSource={data.events}
         columns={columns}
+        pagination={{
+          pageSize: 5,
+        }}
       />
     </div>
   );
