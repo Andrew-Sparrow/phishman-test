@@ -1,6 +1,10 @@
+import { useState } from 'react';
+
 import './App.css';
-import 'antd/dist/antd.css';
-import { Table } from 'antd'
+import 'antd/dist/antd.min.css';
+import { Table, Input, Button } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
+
 
 const data = {
   "events": [
@@ -8,49 +12,49 @@ const data = {
       "key": 1,
       "ts": new Date('2021-09-15T07:47:01.121Z'),
       "level": 1,
-      "message": "message_1"
+      "message": "some comment"
     },
     {
       "key": 2,
       "ts": new Date("2022-09-15T07:47:01.121Z"),
       "level": 1,
-      "message": "message_2"
+      "message": "some message"
     },
     {
       "key": 3,
       "ts": new Date("2021-10-15T07:47:01.121Z"),
       "level": 1,
-      "message": "message_3"
+      "message": "some comment"
     },
     {
       "key": 4,
       "ts": new Date("2021-11-15T07:47:01.121Z"),
       "level": 3,
-      "message": "message_4"
+      "message": "another message"
     },
     {
       "key": 5,
       "ts": new Date("2021-01-15T07:47:01.121Z"),
       "level": 3,
-      "message": "message_5"
+      "message": "new text"
     },
     {
       "key": 6,
       "ts": new Date("2021-03-15T07:47:01.121Z"),
       "level": 1,
-      "message": "message_6"
+      "message": "simple article"
     },
     {
       "key": 7,
       "ts": new Date("2021-07-15T07:47:01.121Z"),
       "level": 1,
-      "message": "message_7"
+      "message": "text"
     },
     {
       "key": 8,
       "ts": new Date("2021-09-15T07:47:01.121Z"),
       "level": 1,
-      "message": "message_8"
+      "message": "big barabum"
     },
     {
       "key": 9,
@@ -62,13 +66,13 @@ const data = {
       "key": 10,
       "ts": new Date("2022-09-15T07:47:01.121Z"),
       "level": 2,
-      "message": "message_10"
+      "message": "la la la"
     },
     {
       "key": 11,
       "ts": new Date("2019-09-15T07:47:01.121Z"),
       "level": 2,
-      "message": "message_11"
+      "message": "piu piu"
     }
   ]
 };
@@ -100,20 +104,75 @@ const columns = [
     sorter: {
       compare: (a, b) => a.level - b.level,
       multiple: 3
+    },
+    filters: [
+      {
+        text: 'Debug',
+        value: 1
+      },
+      {
+        text: 'Info',
+        value: 2
+      },
+      {
+        text: 'Processing',
+        value: 3
+      }
+    ],
+    onFilter: (value, record) => {
+      return record.level === value;
     }
   },
   {
     title: 'Message',
     dataIndex: 'message',
     key: 'message',
-  },
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => {
+      return (
+        <>
+          <Input
+            placeholder='Search'
+            onPressEnter={() => {confirm();}}
+            onBlur={() => {confirm();}}
+            value={selectedKeys[0]}
+            onChange={(evt) => {
+              setSelectedKeys(evt.target.value ? [evt.target.value] : []);
+              confirm();
+            }}
+          />
+          <Button
+            type='primary'
+            onClick={() => {
+              confirm();
+            }}
+          >
+            Search
+          </Button>
+          <Button
+            type='danger'
+            onClick={() => {
+              clearFilters();
+            }}
+          >
+            Reset
+          </Button>
+        </>
+      )
+    },
+    filterIcon: () => { return <SearchOutlined /> },
+    onFilter: (value, record) => {
+      return record.message.toLowerCase().includes(value.toLowerCase());
+    }
+  }
 ];
 
 function App() {
+  const [dataSource, setDataSource] = useState(data.events);
+
   return (
     <div className="App">
       <Table
-        dataSource={data.events}
+        dataSource={dataSource}
         columns={columns}
         pagination={{
           pageSize: 5,
