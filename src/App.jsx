@@ -2,9 +2,13 @@ import { useState } from 'react';
 
 import './App.css';
 import 'antd/dist/antd.min.css';
-import { Table, Input, Button } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
-
+import { Row, Col, Table, Input, Button } from 'antd';
+import {
+  SearchOutlined,
+  SettingOutlined,
+  InfoCircleOutlined,
+  LoadingOutlined
+} from '@ant-design/icons';
 
 const data = {
   "events": [
@@ -77,6 +81,21 @@ const data = {
   ]
 };
 
+const LevelRow = (level) => {
+  return (
+    <Row>
+      <Col span={6}>
+        <p>{level}</p>
+      </Col>
+      <Col span={6}>
+        {level === 1 && < SettingOutlined />}
+        {level === 2 && < InfoCircleOutlined />}
+        {level === 3 && < LoadingOutlined />}
+      </Col>
+    </Row>
+  )
+}
+
 const columns = [
   {
     title: 'ID',
@@ -88,7 +107,7 @@ const columns = [
     },
   },
   {
-    title: 'TS',
+    title: 'TS - Date Event',
     dataIndex: 'ts',
     key: 'ts',
     render: (ts) => <span> {ts.toLocaleString()} </span>,
@@ -98,9 +117,10 @@ const columns = [
     }
   },
   {
-    title: 'Level',
+    title: 'Level Event',
     dataIndex: 'level',
     key: 'level',
+    render: (level) => LevelRow(level),
     sorter: {
       compare: (a, b) => a.level - b.level,
       multiple: 3
@@ -132,8 +152,8 @@ const columns = [
         <>
           <Input
             placeholder='Search'
-            onPressEnter={() => {confirm();}}
-            onBlur={() => {confirm();}}
+            onPressEnter={() => { confirm(); }}
+            onBlur={() => { confirm(); }}
             value={selectedKeys[0]}
             onChange={(evt) => {
               setSelectedKeys(evt.target.value ? [evt.target.value] : []);
