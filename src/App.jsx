@@ -82,12 +82,22 @@ const data = {
 };
 
 const LevelRow = (level) => {
+  const TYPE_LEVEL = {
+    1: 'Debug',
+    2: 'Info',
+    3: 'Processing'
+  }
   return (
-    <Row>
-      <Col span={6}>
+    <Row gutter={16}>
+      <Col span={4}>
         <p>{level}</p>
       </Col>
-      <Col span={6}>
+      <Col span={10}>
+        <span>
+          {TYPE_LEVEL[level]}
+        </span>
+      </Col>
+      <Col span={10}>
         {level === 1 && < SettingOutlined />}
         {level === 2 && < InfoCircleOutlined />}
         {level === 3 && < LoadingOutlined />}
