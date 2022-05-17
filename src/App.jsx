@@ -45,16 +45,6 @@ const LevelRow = (level) => {
   )
 }
 
-const data = {
-  "events": [
-    {
-      "key": 1,
-      "ts": new Date('2021-09-15T07:47:01.121Z'),
-      "level": 1,
-      "message": "some comment"
-    }]
-}
-
 const columns = [
   {
     title: 'ID',
@@ -116,7 +106,6 @@ const columns = [
             value={selectedKeys[0]}
             onChange={(evt) => {
               setSelectedKeys(evt.target.value ? [evt.target.value] : []);
-              confirm();
             }}
           />
           <Button
