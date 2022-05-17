@@ -1,4 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
+import { adaptServerDataToClient } from '../../utils';
 
 import {
   loadEvents
@@ -12,7 +13,7 @@ const initialState = {
 const events = createReducer(initialState, (builder) => {
   builder
     .addCase(loadEvents, (state, action) => {
-      state.events = action.payload;
+      state.events = adaptServerDataToClient(action.payload);
       state.isDataLoaded = true;
     })
     .addDefaultCase((state, action) => state)
