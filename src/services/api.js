@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BACKEND_URL = 'https://phishman-api.herokuapp.com/events';
+const BACKEND_URL = 'https://phishman-api.herokuapp.com';
 const REQUEST_TIMEOUT = 5000;
 
 
