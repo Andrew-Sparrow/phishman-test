@@ -48,10 +48,10 @@ const LevelRow = (level) => {
 const columns = [
   {
     title: 'ID',
-    dataIndex: 'key',
-    key: 'key',
+    dataIndex: 'id',
+    key: 'id',
     sorter: {
-      compare: (a, b) => a.key - b.key,
+      compare: (a, b) => a.id - b.id,
       multiple: 1
     },
   },
@@ -141,7 +141,7 @@ function App() {
 
   if (!isDataLoaded) {
     return (
-      <Spin />
+      <Spin size="large" />
     );
   }
 

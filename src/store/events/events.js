@@ -15,6 +15,7 @@ const events = createReducer(initialState, (builder) => {
       state.events = action.payload;
       state.isDataLoaded = true;
     })
+    .addDefaultCase((state, action) => state)
 });
 
 export { events };
