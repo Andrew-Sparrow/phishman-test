@@ -120,6 +120,7 @@ const columns = [
             type='danger'
             onClick={() => {
               clearFilters();
+              confirm();
             }}
           >
             Reset
