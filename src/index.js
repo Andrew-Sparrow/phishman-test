@@ -1,7 +1,8 @@
+import 'react-app-polyfill/ie11';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import { App } from './App';
+import { App } from './components/App';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 
@@ -21,7 +22,7 @@ const store = configureStore({
     })
 });
 
-store.dispatch(fetchEventsList());
+setInterval(() => store.dispatch(fetchEventsList()), 3 * 1000);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 

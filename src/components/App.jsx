@@ -1,3 +1,5 @@
+import React from 'react';
+
 import './App.css';
 import 'antd/dist/antd.min.css';
 import {
@@ -6,7 +8,6 @@ import {
   Table,
   Input,
   Button,
-  Spin
 } from 'antd';
 
 import {
@@ -16,8 +17,17 @@ import {
   LoadingOutlined,
 } from '@ant-design/icons';
 
+import {
+  Routes,
+  Route,
+  BrowserRouter
+} from 'react-router-dom';
+
+import NotFound from './not-found/not-found';
+
 import { useSelector } from 'react-redux';
-import { getEvents, getIsDataLoaded } from './store/events/selectors';
+import { getEvents } from '../store/events/selectors';
+import { AppRoute } from '../const';
 
 
 const LevelRow = (level) => {
@@ -137,24 +147,23 @@ const columns = [
 
 function App() {
   const events = useSelector(getEvents);
-  const isDataLoaded = useSelector(getIsDataLoaded);
-
-  if (!isDataLoaded) {
-    return (
-      <Spin size="large" />
-    );
-  }
 
   return (
-    <div className="App">
-      <Table
-        dataSource={events}
-        columns={columns}
-        pagination={{
-          pageSize: 5,
-        }}
-      />
-    </div>
+    <BrowserRouter >
+      <Routes>
+        <Route
+          path={AppRoute.MAIN}
+          element={
+            <Table
+              dataSource={events}
+              columns={columns}
+              pagination={{ pageSize: 5 }}
+            />
+          }
+        />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
