@@ -6,7 +6,7 @@ export const ActionType = {
 
 export const loadEvents = createAction(
   ActionType.LOAD_EVENTS,
-  (places) => ({payload: places}),
+  (events) => ({payload: events}),
 );
 
 export const redirectToRoute = createAction(

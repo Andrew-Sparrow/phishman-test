@@ -1,85 +1,24 @@
-import { useState } from 'react';
-
 import './App.css';
 import 'antd/dist/antd.min.css';
-import { Row, Col, Table, Input, Button } from 'antd';
+import {
+  Row,
+  Col,
+  Table,
+  Input,
+  Button,
+  Spin
+} from 'antd';
+
 import {
   SearchOutlined,
   SettingOutlined,
   InfoCircleOutlined,
-  LoadingOutlined
+  LoadingOutlined,
 } from '@ant-design/icons';
 
-const data = {
-  "events": [
-    {
-      "key": 1,
-      "ts": new Date('2021-09-15T07:47:01.121Z'),
-      "level": 1,
-      "message": "some comment"
-    },
-    {
-      "key": 2,
-      "ts": new Date("2022-09-15T07:47:01.121Z"),
-      "level": 1,
-      "message": "some message"
-    },
-    {
-      "key": 3,
-      "ts": new Date("2021-10-15T07:47:01.121Z"),
-      "level": 1,
-      "message": "some comment"
-    },
-    {
-      "key": 4,
-      "ts": new Date("2021-11-15T07:47:01.121Z"),
-      "level": 3,
-      "message": "another message"
-    },
-    {
-      "key": 5,
-      "ts": new Date("2021-01-15T07:47:01.121Z"),
-      "level": 3,
-      "message": "new text"
-    },
-    {
-      "key": 6,
-      "ts": new Date("2021-03-15T07:47:01.121Z"),
-      "level": 1,
-      "message": "simple article"
-    },
-    {
-      "key": 7,
-      "ts": new Date("2021-07-15T07:47:01.121Z"),
-      "level": 1,
-      "message": "text"
-    },
-    {
-      "key": 8,
-      "ts": new Date("2021-09-15T07:47:01.121Z"),
-      "level": 1,
-      "message": "big barabum"
-    },
-    {
-      "key": 9,
-      "ts": new Date("2018-10-15T07:47:01.121Z"),
-      "level": 1,
-      "message": "message_9"
-    },
-    {
-      "key": 10,
-      "ts": new Date("2022-09-15T07:47:01.121Z"),
-      "level": 2,
-      "message": "la la la"
-    },
-    {
-      "key": 11,
-      "ts": new Date("2019-09-15T07:47:01.121Z"),
-      "level": 2,
-      "message": "piu piu"
-    }
-  ]
-};
+import { useSelector } from 'react-redux';
+import { getEvents, getIsDataLoaded } from './store/events/selectors';
+
 
 const LevelRow = (level) => {
   const TYPE_LEVEL = {
@@ -197,12 +136,19 @@ const columns = [
 ];
 
 function App() {
-  const [dataSource, setDataSource] = useState(data.events);
+  const events = useSelector(getEvents);
+  const isDataLoaded = useSelector(getIsDataLoaded);
+
+  if (!isDataLoaded) {
+    return (
+      <Spin />
+    );
+  }
 
   return (
     <div className="App">
       <Table
-        dataSource={dataSource}
+        dataSource={events}
         columns={columns}
         pagination={{
           pageSize: 5,
